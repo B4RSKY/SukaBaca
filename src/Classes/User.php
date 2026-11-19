@@ -26,7 +26,6 @@ abstract class User
         $this->status = $status;
     }
 
-    // Getter & Setter (Encapsulation)
     public function getId(): int
     {
         return $this->id;
@@ -67,7 +66,6 @@ abstract class User
         return password_verify($plainPassword, $this->passwordHash);
     }
 
-    // Method untuk Polymorphism
     abstract public function getRole(): string;
     abstract public function getPermissions(): array;
 
@@ -78,17 +76,22 @@ abstract class User
             'name' => $this->name,
             'email' => $this->email,
             'role' => $this->getRole(),
-            'permissions' => $this->getPermissions(),
             'joined_at' => $this->joinedAt,
             'status' => $this->status,
+            'permissions' => $this->getPermissions(),
         ];
     }
 
     public function toStorageArray(): array
     {
-        $data = $this->toArray();
-        $data['password'] = $this->passwordHash;
-        unset($data['permissions']);
-        return $data;
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => $this->passwordHash,
+            'role' => $this->getRole(),
+            'joined_at' => $this->joinedAt,
+            'status' => $this->status,
+        ];
     }
 }

@@ -29,14 +29,33 @@ class Book
         $this->setStock((int)($data['stock'] ?? 0));
         $this->popularity = (int)($data['popularity'] ?? 75);
         $this->year = (int)($data['year'] ?? (int)date('Y'));
-        $this->description = $data['description'] ?? '';
+        $this->description = $data['description'] ?? 'Deskripsi buku belum ditambahkan.';
     }
 
-    public function getId(): int { return $this->id; }
-    public function getTitle(): string { return $this->title; }
-    public function getAuthor(): string { return $this->author; }
-    public function getCategory(): string { return $this->category; }
-    public function getStock(): int { return $this->stock; }
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getAuthor(): string
+    {
+        return $this->author;
+    }
+
+    public function getCategory(): string
+    {
+        return $this->category;
+    }
+
+    public function getStock(): int
+    {
+        return $this->stock;
+    }
 
     public function setTitle(string $title): void
     {
@@ -70,7 +89,7 @@ class Book
     public function decrementStock(): void
     {
         if ($this->stock <= 0) {
-            throw new InvalidArgumentException('Stok buku habis.');
+            throw new InvalidArgumentException('Maaf, buku sedang tidak tersedia.');
         }
         $this->stock--;
     }

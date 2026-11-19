@@ -18,7 +18,6 @@ class Member extends User
         $this->favorites = $favorites;
     }
 
-    // Polymorphism: Override method parent
     public function getRole(): string
     {
         return 'Member';

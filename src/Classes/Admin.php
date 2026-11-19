@@ -3,7 +3,6 @@ namespace App\Classes;
 
 class Admin extends User
 {
-    // Polymorphism: Override method parent
     public function getRole(): string
     {
         return 'Admin';
