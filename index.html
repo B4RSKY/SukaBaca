@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SukaBaca — perpustakaan digital dan sistem peminjaman e-book.">
+  <title>SukaBaca — Digital Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="SukaBaca beranda">
+        <span class="brand-mark"><i class="icon-book"></i></span>
+        <span>SukaBaca<span class="brand-dot">.</span><small>DIGITAL LIBRARY</small></span>
+      </a>
+      <div class="workspace-label">MENU UTAMA</div>
+      <nav class="nav-list" aria-label="Navigasi utama">
+        <button class="nav-item active" data-view="dashboard"><span class="nav-icon">⌂</span>Dashboard</button>
+        <button class="nav-item" data-view="catalog"><span class="nav-icon">▤</span>Katalog e-book</button>
+        <button class="nav-item member-only" data-view="mybooks"><span class="nav-icon">▣</span>Buku saya</button>
+        <button class="nav-item member-only" data-view="transactions"><span class="nav-icon">↗</span>Riwayat transaksi</button>
+        <div class="admin-label">MANAJEMEN</div>
+        <button class="nav-item admin-only" data-view="managebooks"><span class="nav-icon">＋</span>Kelola e-book</button>
+        <button class="nav-item admin-only" data-view="members"><span class="nav-icon">♙</span>Data member</button>
+        <button class="nav-item admin-only" data-view="alltransactions"><span class="nav-icon">▧</span>Semua transaksi</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-bubble">✦</div>
+          <strong>Butuh bantuan?</strong>
+          <p>Temukan jawaban seputar peminjaman e-book.</p>
+          <button class="text-button" id="helpBtn">Pusat bantuan <span>→</span></button>
+        </div>
+        <button class="profile-mini" data-view="profile">
+          <div class="avatar avatar-purple" id="sideAvatar">A</div>
+          <span class="profile-mini-text"><strong id="sideName">Akbar And Friends</strong><small id="sideRole">Member</small></span>
+          <span class="more-dots">···</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Buka navigasi">☰</button>
+        <div class="breadcrumb"><span>Pages</span><b>/</b><strong id="pageName">Dashboard</strong></div>
+        <div class="topbar-actions">
+          <label class="role-switcher"><span>Mode tampilan</span>
+            <select id="roleSelect" aria-label="Pilih role">
+              <option value="member">Member</option>
+              <option value="admin">Admin</option>
+            </select>
+          </label>
+          <button class="icon-button" id="notificationBtn" aria-label="Notifikasi">♧<i></i></button>
+          <button class="top-user" data-view="profile"><div class="avatar avatar-purple" id="topAvatar">A</div><span id="topName">Akbar And Friends</span><span class="chevron">⌄</span></button>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section class="view active" id="view-dashboard">
+          <div class="welcome-row">
+            <div><p class="eyebrow" id="welcomeDate">KAMIS, 19 NOVEMBER 2026</p><h1 id="welcomeTitle">Selamat datang, Akbar! <span>✦</span></h1><p class="subheading" id="welcomeSub">Temukan bacaan baru dan lanjutkan perjalanan belajarmu.</p></div>
+            <button class="primary-button" data-go="catalog"><span>＋</span> Jelajahi katalog</button>
+          </div>
+          <div class="hero-banner">
+            <div class="hero-copy"><span class="hero-kicker">PILIHAN MINGGU INI</span><h2>Setiap buku membuka<br>jendela dunia baru.</h2><p>Perluas wawasanmu dengan koleksi e-book pilihan yang bisa diakses kapan saja.</p><button class="hero-button" data-go="catalog">Temukan bacaan <span>→</span></button></div>
+            <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="book-stack"><div class="book book-back"></div><div class="book book-mid"></div><div class="book book-front"><span>THE<br>ART OF<br>READING</span></div></div><div class="sparkle s1">✦</div><div class="sparkle s2">✧</div><div class="sparkle s3">✦</div></div>
+          </div>
+          <div class="section-heading"><div><h2>Ringkasan aktivitas</h2><p>Informasi akun dan aktivitas peminjamanmu.</p></div><span class="period-pill">30 hari terakhir <span>⌄</span></span></div>
+          <div class="stats-grid" id="memberStats">
+            <article class="stat-card"><div class="stat-top"><span>Total buku dipinjam</span><span class="stat-icon lavender">▣</span></div><strong>08</strong><small><span class="trend-up">↗ 2 buku</span> dari bulan lalu</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Sedang dipinjam</span><span class="stat-icon peach">◷</span></div><strong>03</strong><small>Perlu dikembalikan sesuai tenggat</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Selesai dibaca</span><span class="stat-icon mint">✓</span></div><strong>05</strong><small><span class="trend-up">Bagus!</span> terus tingkatkan</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Favorit</span><span class="stat-icon blue">♡</span></div><strong>12</strong><small>Koleksi buku tersimpan</small></article>
+          </div>
+          <div class="stats-grid admin-stats hidden" id="adminStats">
+            <article class="stat-card"><div class="stat-top"><span>Total koleksi</span><span class="stat-icon lavender">▤</span></div><strong>248</strong><small><span class="trend-up">↗ 12 buku</span> bulan ini</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Member aktif</span><span class="stat-icon peach">♙</span></div><strong>1.284</strong><small>Pengguna terdaftar</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Dipinjam saat ini</span><span class="stat-icon mint">▣</span></div><strong>356</strong><small>Transaksi berjalan</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Menunggu proses</span><span class="stat-icon blue">◷</span></div><strong>18</strong><small>Perlu ditinjau admin</small></article>
+          </div>
+          <div class="dashboard-columns">
+            <section class="panel recommended-panel"><div class="panel-heading"><div><h2 id="featuredTitle">Rekomendasi untukmu</h2><p>Bacaan pilihan yang mungkin kamu sukai.</p></div><button class="link-button" data-go="catalog">Lihat semua <span>→</span></button></div><div class="book-grid compact-grid" id="recommendedBooks"></div></section>
+            <section class="panel activity-panel"><div class="panel-heading"><div><h2>Aktivitas terbaru</h2><p>Perkembangan aktivitas akun.</p></div><button class="more-button" aria-label="Lainnya">···</button></div><div class="activity-list" id="activityList"></div></section>
+          </div>
+        </section>
+
+        <section class="view" id="view-catalog">
+          <div class="page-intro"><div><p class="eyebrow">JELAJAHI KOLEKSI</p><h1>Katalog e-book</h1><p class="subheading">Temukan buku yang sesuai dengan minat dan kebutuhanmu.</p></div><div class="catalog-count"><strong id="catalogCount">8</strong><span>koleksi tersedia</span></div></div>
+          <div class="filter-panel">
+            <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Cari judul, penulis, atau topik..." aria-label="Cari buku"><kbd>⌘ K</kbd></label>
+            <select id="categoryFilter" aria-label="Filter kategori"><option value="all">Semua kategori</option><option>Teknologi</option><option>Bisnis</option><option>Desain</option><option>Pengembangan Diri</option><option>Fiksi</option></select>
+            <select id="sortFilter" aria-label="Urutkan buku"><option value="popular">Paling populer</option><option value="title">Judul A–Z</option><option value="newest">Terbaru</option></select>
+          </div>
+          <div class="catalog-toolbar"><span id="resultText">Menampilkan semua koleksi</span><div class="view-toggle"><button class="selected" data-layout="grid" aria-label="Tampilan grid">▦</button><button data-layout="list" aria-label="Tampilan list">☷</button></div></div>
+          <div class="book-grid catalog-grid" id="catalogBooks"></div>
+          <div class="empty-state hidden" id="emptyState"><div>⌕</div><h3>Buku tidak ditemukan</h3><p>Coba kata kunci atau kategori lainnya.</p><button class="secondary-button" id="resetFilters">Reset filter</button></div>
+        </section>
+
+        <section class="view" id="view-mybooks">
+          <div class="page-intro"><div><p class="eyebrow">KOLEKSI PRIBADI</p><h1>Buku saya</h1><p class="subheading">Pantau buku yang sedang kamu pinjam dan yang sudah selesai dibaca.</p></div></div>
+          <div class="tabs" id="myBookTabs"><button class="active" data-tab="borrowed">Sedang dipinjam <span class="tab-count">3</span></button><button data-tab="returned">Selesai dibaca</button></div>
+          <div class="loan-list" id="loanList"></div>
+        </section>
+
+        <section class="view" id="view-transactions">
+          <div class="page-intro"><div><p class="eyebrow">AKTIVITAS AKUN</p><h1>Riwayat transaksi</h1><p class="subheading">Lihat seluruh aktivitas peminjaman e-book milikmu.</p></div><button class="secondary-button" id="exportMember">↓ Unduh laporan</button></div>
+          <div class="table-panel"><div class="table-toolbar"><div class="table-search"><span>⌕</span><input id="transactionSearch" placeholder="Cari judul buku..."></div><select id="transactionStatus"><option value="all">Semua status</option><option>Berlangsung</option><option>Selesai</option><option>Menunggu</option></select></div><div class="table-scroll"><table><thead><tr><th>ID TRANSAKSI</th><th>JUDUL E-BOOK</th><th>TANGGAL PINJAM</th><th>BATAS AKSES</th><th>STATUS</th></tr></thead><tbody id="transactionRows"></tbody></table></div></div>
+        </section>
+
+        <section class="view" id="view-profile">
+          <div class="page-intro"><div><p class="eyebrow">PENGATURAN AKUN</p><h1>Profil saya</h1><p class="subheading">Kelola informasi pribadi dan preferensi akun.</p></div></div>
+          <div class="profile-layout"><div class="panel profile-card"><div class="profile-cover"></div><div class="profile-avatar-wrap"><div class="avatar avatar-large avatar-purple" id="profileAvatar">A</div><button class="camera-button" aria-label="Ubah foto">✎</button></div><h2 id="profileDisplayName">Akbar And Friends</h2><p class="muted" id="profileEmail">Akbar.bar@email.com</p><span class="role-badge" id="profileRole">MEMBER</span><div class="profile-divider"></div><div class="profile-meta"><div><small>Member sejak</small><strong>September 2025</strong></div><div><small>ID Pengguna</small><strong>MBR-00248</strong></div></div></div><form class="panel profile-form" id="profileForm"><div class="panel-heading"><div><h2>Informasi pribadi</h2><p>Perbarui detail profil akunmu.</p></div></div><div class="form-grid"><label>Nama lengkap<input id="profileNameInput" value="Akbar And Friends" required minlength="3"></label><label>Alamat email<input id="profileEmailInput" type="email" value="Akbar.bar@email.com" required></label><label>Nomor telepon<input value="0812 3456 7890" type="tel"></label><label>Tanggal lahir<input value="2004-08-14" type="date"></label><label class="full-field">Bio<textarea rows="3" placeholder="Ceritakan sedikit tentang dirimu...">Mahasiswa yang gemar membaca dan mempelajari hal baru.</textarea></label></div><div class="form-actions"><button type="reset" class="secondary-button">Batalkan</button><button class="primary-button" type="submit">Simpan perubahan</button></div></form></div>
+        </section>
+
+        <section class="view" id="view-managebooks">
+          <div class="page-intro"><div><p class="eyebrow">ADMINISTRATOR</p><h1>Kelola e-book</h1><p class="subheading">Atur koleksi buku yang tersedia di perpustakaan digital.</p></div><button class="primary-button" id="addBookBtn">＋ Tambah e-book</button></div>
+          <div class="table-panel"><div class="table-toolbar"><div class="table-search"><span>⌕</span><input id="adminBookSearch" placeholder="Cari judul atau penulis..."></div><select id="adminCategory"><option value="all">Semua kategori</option><option>Teknologi</option><option>Bisnis</option><option>Desain</option><option>Pengembangan Diri</option><option>Fiksi</option></select></div><div class="table-scroll"><table><thead><tr><th>JUDUL E-BOOK</th><th>KATEGORI</th><th>PENULIS</th><th>STOK</th><th>STATUS</th><th>AKSI</th></tr></thead><tbody id="adminBookRows"></tbody></table></div></div>
+        </section>
+
+        <section class="view" id="view-members">
+          <div class="page-intro"><div><p class="eyebrow">ADMINISTRATOR</p><h1>Data member</h1><p class="subheading">Kelola pengguna yang terdaftar di SukaBaca.</p></div><button class="secondary-button" id="exportMembers">↓ Ekspor data</button></div>
+          <div class="table-panel"><div class="table-toolbar"><div class="table-search"><span>⌕</span><input id="memberSearch" placeholder="Cari nama atau email..."></div><select><option>Semua status</option><option>Aktif</option><option>Nonaktif</option></select></div><div class="table-scroll"><table><thead><tr><th>NAMA MEMBER</th><th>EMAIL</th><th>BERGABUNG</th><th>PEMINJAMAN</th><th>STATUS</th></tr></thead><tbody id="memberRows"></tbody></table></div></div>
+        </section>
+
+        <section class="view" id="view-alltransactions">
+          <div class="page-intro"><div><p class="eyebrow">ADMINISTRATOR</p><h1>Semua transaksi</h1><p class="subheading">Pantau dan kelola seluruh aktivitas peminjaman.</p></div><button class="secondary-button" id="exportAll">↓ Ekspor laporan</button></div>
+          <div class="table-panel"><div class="table-toolbar"><div class="table-search"><span>⌕</span><input id="adminTransactionSearch" placeholder="Cari ID, member, atau buku..."></div><select id="adminTransactionStatus"><option value="all">Semua status</option><option>Berlangsung</option><option>Selesai</option><option>Menunggu</option></select></div><div class="table-scroll"><table><thead><tr><th>ID TRANSAKSI</th><th>MEMBER</th><th>JUDUL E-BOOK</th><th>TANGGAL</th><th>STATUS</th><th>AKSI</th></tr></thead><tbody id="allTransactionRows"></tbody></table></div></div>
+        </section>
+
+        <footer class="footer"><span>© 2026 SukaBaca Digital Library</span><span>Dibuat untuk pengalaman membaca yang lebih baik <b>✦</b></span></footer>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Tutup">×</button>
+      <div id="modalContent"></div>
+    </section>
+  </div>
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
