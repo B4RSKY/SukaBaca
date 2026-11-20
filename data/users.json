@@ -1,0 +1,25 @@
+[
+    {
+        "id": 1,
+        "name": "Akbar, Rifqi, Niam",
+        "email": "member@sukabaca.test",
+        "password": "$2y$12$aIy3qyzNF8TqaVUwmBS1WegqRu6wpwQNCYB3fjzPG0F6jZGhbRnH2",
+        "role": "Member",
+        "joined_at": "20 Nov 2026",
+        "status": "Aktif",
+        "favorites": [
+            2,
+            5,
+            7
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Admin SukaBaca",
+        "email": "admin@sukabaca.test",
+        "password": "$2y$12$NR1vLJW24GY3moKm7usnLOpEAvWiqhJRuB0yv1RnbuNvHxBuQmw/y",
+        "role": "Admin",
+        "joined_at": "20 Nov 2026",
+        "status": "Aktif"
+    }
+]

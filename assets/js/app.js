@@ -1,6 +1,7 @@
 let books = [];
 let members = [];
 let loans = [];
+let currentUser = null;
 let currentRole = "member",
   currentView = "dashboard",
   favorites = new Set(),
@@ -197,16 +198,21 @@ function setRole(role) {
   currentRole = role;
   document.body.classList.toggle("is-admin", role === "admin");
   const admin = role === "admin",
-    name = admin ? "Admin SukaBaca" : "Akbar, Rifqi, Niam";
+    name = currentUser?.name || (admin ? "Admin SukaBaca" : "Member SukaBaca");
   $("#sideName").textContent = name;
   $("#topName").textContent = name;
   $("#sideRole").textContent = admin ? "Administrator" : "Member";
   $("#sideAvatar").textContent = admin ? "L" : "A";
   $("#topAvatar").textContent = admin ? "L" : "A";
-  $("#welcomeTitle").innerHTML = admin ? "Selamat bekerja, Admin! <span>✦</span>" : "Selamat datang, Akbar, Rifqi, Niam! <span>✦</span>";
+  $("#welcomeTitle").innerHTML = admin ? "Selamat bekerja, Admin! <span>✦</span>" : `Selamat datang, ${name}! <span>✦</span>`;
   $("#welcomeSub").textContent = admin ? "Pantau aktivitas dan kelola perpustakaan digital SukaBaca." : "Temukan bacaan baru dan lanjutkan perjalanan belajarmu.";
   $("#featuredTitle").textContent = admin ? "Koleksi terbaru" : "Rekomendasi untukmu";
   $("#profileRole").textContent = admin ? "ADMINISTRATOR" : "MEMBER";
+  if (currentUser) {
+    $("#profileNameInput").value = currentUser.name;
+    $("#profileEmailInput").value = currentUser.email;
+    syncProfile();
+  }
   if (admin && ["mybooks", "transactions", "profile"].includes(currentView)) showView("dashboard");
   if (!admin && ["managebooks", "members", "alltransactions"].includes(currentView)) showView("dashboard");
   renderRecommended();
@@ -317,8 +323,15 @@ document.addEventListener("submit", async (e) => {
 
 $("#roleSelect").addEventListener("change", async (e) => {
   try {
-    await api("switch_role", { role: e.target.value });
-    setRole(e.target.value);
+    const switched = await api("switch_role", { role: e.target.value });
+    currentUser = switched.data.user;
+    const refreshed = await api("init");
+    books = refreshed.data.books;
+    loans = refreshed.data.loans;
+    members = refreshed.data.members;
+    favorites = new Set(refreshed.data.favorites);
+    setRole(refreshed.data.role);
+    renderCatalog(); renderLoans(); renderTransactions(); renderAdminBooks(); renderMembers(); renderAllTransactions();
     showView("dashboard");
     toast(`Mode ${e.target.value === "admin" ? "Admin" : "Member"} aktif.`);
   } catch (err) {
@@ -385,6 +398,7 @@ document.addEventListener("keydown", (e) => {
   syncDashboardDate();
   try {
     const res = await api("init");
+    currentUser = res.data.user;
     books = res.data.books;
     loans = res.data.loans;
     members = res.data.members;

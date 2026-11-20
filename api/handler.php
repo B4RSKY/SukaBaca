@@ -6,73 +6,54 @@ require_once dirname(__DIR__) . '/config/config.php';
 use App\Services\LibraryService;
 
 header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 function jsonResponse(bool $success, string $message, mixed $data = null, int $code = 200): void
 {
     http_response_code($code);
-    echo json_encode([
-        'success' => $success,
-        'message' => $message,
-        'data' => $data,
-    ], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['success'=>$success, 'message'=>$message, 'data'=>$data], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
 
 try {
     $service = new LibraryService();
-    $action = $_GET['action'] ?? '';
-    $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+    $action = (string)($_GET['action'] ?? '');
+    $raw = file_get_contents('php://input');
+    $decoded = $raw !== '' ? json_decode($raw, true) : null;
+    $input = is_array($decoded) ? $decoded : $_POST;
 
     switch ($action) {
         case 'init':
             $user = $service->getCurrentUser();
-            jsonResponse(true, 'Data dimuat', [
-                'role' => strtolower($user->getRole()),
-                'books' => $service->getAllBooks(),
-                'loans' => $service->getTransactions(),
-                'members' => $service->getMembersForTable(),
-                'favorites' => $service->getMemberFavorites(),
+            jsonResponse(true, 'Data berhasil dimuat.', [
+                'user'=>$user->toArray(),
+                'role'=>strtolower($user->getRole()),
+                'books'=>$service->getAllBooks(),
+                'loans'=>$service->getTransactions(),
+                'members'=>$service->getMembersForTable(),
+                'favorites'=>$service->getMemberFavorites(),
             ]);
-            break;
-
         case 'switch_role':
-            $user = $service->switchRoleSession($input['role'] ?? 'member');
-            jsonResponse(true, 'Mode diubah', ['role' => strtolower($user->getRole())]);
-            break;
-
+            $user = $service->switchRoleSession((string)($input['role'] ?? 'member'));
+            jsonResponse(true, 'Mode berhasil diubah.', ['role'=>strtolower($user->getRole()), 'user'=>$user->toArray()]);
         case 'borrow':
             $trx = $service->borrowBook((int)($input['bookId'] ?? 0));
-            jsonResponse(true, 'Buku berhasil dipinjam.', $trx->toArray());
-            break;
-
+            jsonResponse(true, 'Buku berhasil dipinjam.', $trx->toArray(), 201);
         case 'favorite':
-            $favs = $service->toggleFavorite((int)($input['bookId'] ?? 0));
-            jsonResponse(true, 'Favorit diperbarui.', $favs);
-            break;
-
+            jsonResponse(true, 'Favorit berhasil diperbarui.', $service->toggleFavorite((int)($input['bookId'] ?? 0)));
         case 'add_book':
-            $book = $service->createBook($input);
-            jsonResponse(true, 'E-book berhasil ditambahkan.', $book->toArray());
-            break;
-
+            jsonResponse(true, 'E-book berhasil ditambahkan.', $service->createBook($input)->toArray(), 201);
         case 'edit_book':
-            $book = $service->updateBook((int)($input['id'] ?? 0), $input);
-            jsonResponse(true, 'Informasi e-book berhasil diperbarui.', $book->toArray());
-            break;
-
+            jsonResponse(true, 'Informasi e-book berhasil diperbarui.', $service->updateBook((int)($input['id'] ?? 0), $input)->toArray());
         case 'complete_loan':
-            $trx = $service->returnBook((string)($input['id'] ?? ''));
-            jsonResponse(true, 'Transaksi ditandai selesai.', $trx->toArray());
-            break;
-
+            jsonResponse(true, 'Transaksi berhasil diselesaikan.', $service->returnBook((string)($input['id'] ?? ''))->toArray());
         case 'update_profile':
-            $user = $service->updateProfile($input['name'] ?? '', $input['email'] ?? '');
-            jsonResponse(true, 'Profil diperbarui.', $user->toArray());
-            break;
-
+            jsonResponse(true, 'Profil berhasil diperbarui.', $service->updateProfile((string)($input['name'] ?? ''), (string)($input['email'] ?? ''))->toArray());
         default:
-            jsonResponse(false, 'Action tidak valid.', null, 404);
+            jsonResponse(false, 'Action tidak ditemukan.', null, 404);
     }
-} catch (\Throwable $e) {
+} catch (InvalidArgumentException $e) {
+    jsonResponse(false, $e->getMessage(), null, 422);
+} catch (Throwable $e) {
     jsonResponse(false, $e->getMessage(), null, 400);
 }
